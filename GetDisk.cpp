@@ -44,15 +44,15 @@ void GetDisk::Pause()
 	this_thread::sleep_for(seconds(10)); // Пауза для тестирования
 	*/
 	
-	auto nowTime = system_clock::now(); //получаем текущее время
-	//nowTime = nowTime + chrono::hours(3); // КОСТЫЛЬ!!! system_clock::now отдает время меньше на 3 часа, чем на компе
+	auto nowTime = system_clock::now(); //получаем текущее время. Возвращает в UTC
 	
 	//cout << "Текущее время [nowTime] - " << nowTime << endl;
 
 	//тут формируем время, с которым потом будет сравнивать текущее
 	auto today = floor<days>(nowTime); //округляем до указанных единиц
-	auto todayStartMorning = today + hours(10);
-	auto todayStartEvening = today + hours(17);
+	//прибавляем время с поправкой на UTC, чтобы попасть в нужное время по времени МСК
+	auto todayStartMorning = today + hours(7);
+	auto todayStartEvening = today + hours(14);
 	auto tomorrowStart = todayStartMorning + hours(24);
 
 	system_clock::time_point resTime;
